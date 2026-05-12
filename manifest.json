@@ -1,0 +1,25 @@
+{
+  "name": "Investment Tracker",
+  "short_name": "InvestTracker",
+  "description": "Track contributions and calculate investment returns fairly",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#D2D7DF",
+  "theme_color": "#1D84B5",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23D2D7DF'/><text x='256' y='280' font-family='Arial, sans-serif' font-size='200' font-weight='bold' text-anchor='middle' fill='%23353535'>💰</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23D2D7DF'/><text x='256' y='280' font-family='Arial, sans-serif' font-size='200' font-weight='bold' text-anchor='middle' fill='%23353535'>💰</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

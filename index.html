@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#353535">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Investment Tracker">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect fill='%231D84B5' width='180' height='180'/><text x='90' y='100' font-size='80' font-weight='bold' fill='white' text-anchor='middle' font-family='Arial'>IT</text></svg>">
+    <title>Investment & Contribution Tracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1>Investment & Contribution Tracker</h1>
+                <p class="subtitle">Track KWD contributions and calculate fair investment returns</p>
+            </div>
+        </header>
+
+        <!-- Group Management -->
+        <div class="control-panel">
+            <button class="btn btn-primary" onclick="showCreateGroupModal()">New Investment Group</button>
+            <select id="groupSelect" onchange="switchGroup()" class="group-select">
+                <option value="">Select a group...</option>
+            </select>
+            <button class="btn btn-danger btn-sm" id="deleteGroupBtn" onclick="deleteCurrentGroup()" style="display: none;">Delete Group</button>
+        </div>
+
+        <!-- Create Group Modal -->
+        <div id="groupModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Create New Investment Group</h2>
+                <input type="text" id="groupNameInput" placeholder="e.g., Business Venture, Property Investment" class="input">
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" onclick="createGroup()">Create</button>
+                    <button class="btn btn-secondary" onclick="closeGroupModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="main-content hidden">
+            <!-- Group Info -->
+            <div class="group-header">
+                <div>
+                    <h2 id="groupTitle"></h2>
+                    <p id="groupStats"></p>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('contributions')">Contributions</button>
+                <button class="tab-btn" onclick="switchTab('returns')">Calculate Returns</button>
+                <button class="tab-btn" onclick="switchTab('history')">History</button>
+            </div>
+
+            <!-- Tab 1: Contributions -->
+            <div id="contributionsTab" class="tab-content active">
+                <section class="section">
+                    <h3>Add New Contribution</h3>
+                    <div class="section-divider"></div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px;">
+                        <div>
+                            <input type="text" id="nameInput" placeholder="Person's name" class="input" list="existingNames">
+                            <datalist id="existingNames"></datalist>
+                        </div>
+                        <input type="number" id="amountInput" placeholder="Amount (KWD) - negative for withdrawal" class="input" step="0.01">
+                    </div>
+                    <button class="btn btn-primary" onclick="addContribution()" style="width: 100%;">Add Contribution</button>
+                </section>
+
+                <section class="section">
+                    <h3>Current Contributions</h3>
+                    <div class="section-divider"></div>
+                    <div id="contributionsSummary" class="summary-grid"></div>
+                </section>
+            </div>
+
+            <!-- Tab 2: Calculate Returns -->
+            <div id="returnsTab" class="tab-content hidden">
+                <section class="section">
+                    <h3>Investment Return Calculator</h3>
+                    <div class="section-divider"></div>
+                    <p class="info-text">Enter the total amount gained/lost. It will be distributed based on each person's contribution percentage.</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 700; margin-bottom: 8px;">Total Amount You Have Now:</label>
+                        <input type="number" id="totalReturnInput" placeholder="e.g., 450 (if you invested 350 and now have 450)" class="input" step="0.01" min="0">
+                        <button class="btn btn-info" onclick="calculateReturns()" style="width: 100%; margin-top: 12px;">Calculate Distribution</button>
+                    </div>
+
+                    <div id="returnsBreakdown" style="display: none; margin-top: 25px;">
+                        <h4 style="color: #1D84B5; margin-bottom: 15px;">Fair Distribution</h4>
+                        <div id="returnsDetails"></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Tab 3: History -->
+            <div id="historyTab" class="tab-content hidden">
+                <section class="section">
+                    <h3>Transaction History</h3>
+                    <div class="section-divider"></div>
+                    <div id="historyList" class="history-list"></div>
+                </section>
+            </div>
+
+            <!-- Export Section -->
+            <section class="section">
+                <h3>Export Data</h3>
+                <div class="section-divider"></div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="exportAsJSON()">Export JSON</button>
+                    <button class="btn btn-secondary" onclick="exportAsCSV()">Export CSV</button>
+                </div>
+            </section>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <p>No group selected. Create a new investment group to get started.</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
